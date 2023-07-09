@@ -24,7 +24,7 @@ dependencies {
 
     implementation("info.picocli:picocli:4.7.3")
     implementation("org.ethelred:ethelred_util:0.4")
-    implementation("gg.jte:jte:3.0.0")
+    implementation("gg.jte:jte:3.0.1")
     implementation("org.jsoup:jsoup:1.15.4")
     compileOnly("io.soabase.record-builder:record-builder-core:35")
     annotationProcessor("io.soabase.record-builder:record-builder-processor:35")
