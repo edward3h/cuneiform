@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media print {
+    #options, .header {
+        display: none;
+    }
+    img {
+        max-height: calc(100vh - 2rem);
+    }
+    .datasheet img {
+        max-height: calc(50vh - 1rem);
+    }
+}
+
+@page {
+    size: portrait;
+}
