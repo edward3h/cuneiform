@@ -24,15 +24,15 @@ dependencies {
 
     implementation("info.picocli:picocli:4.7.3")
     implementation("org.ethelred:ethelred_util:0.4")
-    implementation("gg.jte:jte:3.0.0")
+    implementation("gg.jte:jte:3.0.1")
     implementation("org.jsoup:jsoup:1.15.4")
     compileOnly("io.soabase.record-builder:record-builder-core:35")
     annotationProcessor("io.soabase.record-builder:record-builder-processor:35")
 
     implementation("org.slf4j:slf4j-api:2.0.3")
     runtimeOnly("org.logevents:logevents:0.4.3")
-    jteGenerate("gg.jte:jte-models:3.0.0")
-    implementation("gg.jte:jte-models:3.0.0")
+    jteGenerate("gg.jte:jte-models:3.0.1")
+    implementation("gg.jte:jte-models:3.0.1")
 
     implementation("com.github.SvenWoltmann:color-thief-java:master-SNAPSHOT") // jitpack build from https://github.com/SvenWoltmann/color-thief-java
     implementation("org.jsoup:jsoup:1.15.4")
