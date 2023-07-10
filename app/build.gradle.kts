@@ -116,9 +116,11 @@ val downloadPdfs by tasks.registering(Download::class) {
     dest("$buildDir/pdfs")
     onlyIfModified(true)
     useETag(true)
+    outputs.dir(dest)
 }
 
 val generatePages by tasks.registering(JavaExec::class) {
+    dependsOn(downloadPdfs)
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass.set("com.ordoacerbus.cuneiform.App")
     args("--output-dir", "$buildDir/pages")
@@ -131,6 +133,7 @@ val generatePages by tasks.registering(JavaExec::class) {
 
 val prepareDeploy by tasks.registering(Copy::class) {
     destinationDir = file("$buildDir/deploy")
+    outputs.dir(destinationDir)
     from(generateCss) {
         into("assets")
     }
