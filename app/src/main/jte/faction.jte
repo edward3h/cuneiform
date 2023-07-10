@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../assets/style.css">
     <script src="../assets/client.js"></script>
 </head>
-<body onload="main()" class="bg-base-200 pt-4">
+<body onload="main()" class="bg-base-200 pt-4 print:pt-0">
 <div class="header mx-4">
     <div><a href="../" class="link link-hover">Index</a></div>
     <h1 class="text-xl font-bold mx-4">${faction.name()}</h1>

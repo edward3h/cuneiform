@@ -10,7 +10,7 @@
         max-height: calc(100vh - 2rem);
     }
     .datasheet img {
-        max-height: calc(50vh - 1rem);
+        max-height: calc(50vh - 2rem);
     }
 }
 
