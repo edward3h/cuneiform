@@ -7,7 +7,6 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -26,11 +25,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FactionProcessor extends PDFTextStripper implements Processor {
     private static final Logger LOGGER = LoggerFactory.getLogger(FactionProcessor.class);
     private static final Pattern KEYWORDS = Pattern.compile("^KEYWORDS[^:]*:(.*)");
+    private static final Pattern DETACHMENT_TITLE = Pattern.compile("(.+) [-–] (.+)");
 
     private static final Color LIGHT = Color.WHITE;
     private static final Color DARK = Color.GRAY;
@@ -59,35 +60,63 @@ public class FactionProcessor extends PDFTextStripper implements Processor {
     public Metadata processInto(Path outdir) throws IOException {
         LOGGER.info("Processing {}", input);
         factionBuilder = FactionBuilder.builder().keywords(new Counter<>());
-        doc = PDDocument.load(input.toFile());
-        if (!htmlOnly) {
-            processImages(doc);
-        }
-        renderer.document(doc);
-        writeText(doc, NullWriter.INSTANCE);
-        var factionName = factionCounter.max().orElseThrow();
-        factionBuilder.name(factionName);
-        var dir = outdir.resolve(Util.safeName(factionName));
-        factionBuilder.factionDir(dir);
-        Files.createDirectories(dir);
-        var futures = new ArrayList<Future<?>>();
-        for (var page: factionBuilder.pages()) {
-            futures.add(executor.submit(() -> {
-                try {
-                    writePageFile(dir, page);
-                } catch (IOException e) {
-                    throw new UncheckedIOException(e);
+        try {
+            doc = PDDocument.load(input.toFile());
+            if (!htmlOnly) {
+                processImages(doc);
+            }
+            renderer.document(doc);
+            writeText(doc, NullWriter.INSTANCE);
+            var factionName = extractFactionName();//factionCounter.max().orElseThrow();
+            factionBuilder.name(factionName);
+            var dir = outdir.resolve(Util.safeName(factionName));
+            factionBuilder.factionDir(dir);
+            Files.createDirectories(dir);
+            if (!htmlOnly) {
+                var futures = new ArrayList<Future<?>>();
+                for (var page : factionBuilder.pages()) {
+                    futures.add(executor.submit(() -> {
+                        try {
+                            writePageFile(dir, page);
+                        } catch (IOException e) {
+                            throw new UncheckedIOException(e);
+                        }
+                    }));
                 }
-            }));
-        }
-        for (var future: futures) {
-            try {
-                future.get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
+                for (var future : futures) {
+                    try {
+                        future.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        } finally {
+            if (doc != null) {
+                doc.close();
             }
         }
         return factionBuilder.build();
+    }
+
+    private String extractFactionName() {
+        // fails if there are zero pages, but that is a problem in itself
+        var firstTitle = factionBuilder.pages().get(0).title();
+        var matcher = DETACHMENT_TITLE.matcher(firstTitle);
+        if (matcher.find()) {
+            firstTitle = matcher.group(1);
+            LOGGER.debug("matcher {}", matcher);
+        } else {
+            LOGGER.debug("No match");
+        }
+        LOGGER.debug("faction title {} codePoints {} from doc {}", firstTitle, debugString(firstTitle), input);
+        return firstTitle;
+    }
+
+    private String debugString(String s) {
+        return s.codePoints()
+                .mapToObj(Integer::toHexString)
+                .collect(Collectors.joining(" "));
     }
 
     private void processImages(PDDocument doc) {
