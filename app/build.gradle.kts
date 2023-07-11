@@ -145,6 +145,7 @@ val remoteHost = "cuneiform"
 val remotePath = "cuneiform.ordoacerbus.com"
 
 val deploy by tasks.registering(Exec::class) {
+    dependsOn(prepareDeploy)
     inputs.dir(prepareDeploy.get().destinationDir)
     commandLine("rsync", "-avz")
     args(prepareDeploy.get().destinationDir.listFiles().map {it.toString()})
