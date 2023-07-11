@@ -4,7 +4,7 @@ import java.util.regex.Pattern
 
 plugins {
     java
-    id("gg.jte.gradle") version "3.0.0"
+    id("gg.jte.gradle") version "3.0.1"
     id("com.github.node-gradle.node") version "5.0.0"
     id("de.undercouch.download") version "5.4.0"
 }
