@@ -30,7 +30,7 @@ dependencies {
     annotationProcessor("io.soabase.record-builder:record-builder-processor:37")
 
     implementation("org.slf4j:slf4j-api:2.0.7")
-    runtimeOnly("org.logevents:logevents:0.4.3")
+    runtimeOnly("org.logevents:logevents:0.4.4")
     jteGenerate("gg.jte:jte-models:3.0.1")
     implementation("gg.jte:jte-models:3.0.1")
 
