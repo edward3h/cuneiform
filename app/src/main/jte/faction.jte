@@ -10,22 +10,30 @@
 </head>
 <body onload="main()" class="bg-base-200 pt-4 print:pt-0">
 <div class="header mx-4">
-    <div><a href="../" class="link link-hover">Index</a></div>
-    <h1 class="text-xl font-bold mx-4">${faction.name()}</h1>
+    <div><a href="../" class="link">Factions Index</a></div>
+    <h1 class="text-xl font-bold px-4 mx-auto w-max">${faction.name()}</h1>
 </div>
-<div id="options" class="grid grid-cols-3 gap-4 justify-center m-4">
+<div id="options" class="p-4 m-auto max-w-6xl">
+    <div class="columns-2xs gap-4">
     @template.toggle(key = "general", display = "Army Rules")
-    @template.toggle(key = "armoury", display = "Armoury")
+        @if (faction.pages().stream().anyMatch(p -> p.type() == PageType.Armoury))
+            @template.toggle(key = "armoury", display = "Armoury")
+        @endif
     @template.toggle(key = "datasheet-back", display = "Hide Datasheet Backs", exclude = true)
-    <fieldset class="col-span-3 grid grid-cols-4 gap-4 justify-center"><legend class="font-bold text-lg">Units</legend>
+    </div>
+    <fieldset><legend class="font-bold text-lg">Units</legend>
+        <div class="columns-3xs gap-4">
         @for(var datasheet: faction.datasheets())
             @template.toggle(key = "unit-" + Util.safeName(datasheet.title()), display = datasheet.title(), boxKeywords = datasheet.keywords())
         @endfor
-        <div class="col-start-1"><button id="allUnits" class="btn btn-primary btn-outline">Select All</button></div>
-        <div class="col-start-2"><button id="noUnits" class="btn btn-secondary btn-outline">Select None</button></div>
+        </div>
+        <div class="flex justify-center gap-4 mt-4">
+            <button id="allUnits" class="btn btn-primary btn-outline w-40">Select All</button>
+            <button id="noUnits" class="btn btn-secondary btn-outline w-40">Select None</button>
+        </div>
     </fieldset>
 </div>
-<div id="pages" class="m-4">
+<div id="pages" class="p-4 m-auto max-w-6xl">
 @for(var page: faction.pages())
     @if(page.type() == PageType.General && page.title() != null)
         <div class="page general hidden pb-4 text-center">
