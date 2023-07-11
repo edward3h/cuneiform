@@ -25,7 +25,7 @@ dependencies {
     implementation("info.picocli:picocli:4.7.3")
     implementation("org.ethelred:ethelred_util:0.4")
     implementation("gg.jte:jte:3.0.1")
-    implementation("org.jsoup:jsoup:1.15.4")
+    implementation("org.jsoup:jsoup:1.16.1")
     compileOnly("io.soabase.record-builder:record-builder-core:37")
     annotationProcessor("io.soabase.record-builder:record-builder-processor:35")
 
@@ -35,7 +35,7 @@ dependencies {
     implementation("gg.jte:jte-models:3.0.1")
 
     implementation("com.github.SvenWoltmann:color-thief-java:master-SNAPSHOT") // jitpack build from https://github.com/SvenWoltmann/color-thief-java
-    implementation("org.jsoup:jsoup:1.15.4")
+    implementation("org.jsoup:jsoup:1.16.1")
 }
 
 testing {
