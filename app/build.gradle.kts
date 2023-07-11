@@ -22,7 +22,7 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.13.0")
 
-    implementation("info.picocli:picocli:4.7.3")
+    implementation("info.picocli:picocli:4.7.4")
     implementation("org.ethelred:ethelred_util:0.4")
     implementation("gg.jte:jte:3.0.1")
     implementation("org.jsoup:jsoup:1.15.4")
