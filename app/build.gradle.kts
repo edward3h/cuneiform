@@ -27,7 +27,7 @@ dependencies {
     implementation("gg.jte:jte:3.0.1")
     implementation("org.jsoup:jsoup:1.15.4")
     compileOnly("io.soabase.record-builder:record-builder-core:37")
-    annotationProcessor("io.soabase.record-builder:record-builder-processor:35")
+    annotationProcessor("io.soabase.record-builder:record-builder-processor:37")
 
     implementation("org.slf4j:slf4j-api:2.0.3")
     runtimeOnly("org.logevents:logevents:0.4.3")
