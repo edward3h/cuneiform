@@ -121,9 +121,14 @@ val downloadPdfs by tasks.registering(Download::class) {
 
 val generatePages by tasks.registering(JavaExec::class) {
     dependsOn(downloadPdfs)
+    doFirst {
+        if (project.hasProperty("cleanPages")) {
+            delete("$buildDir/pages")
+        }
+    }
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass.set("com.ordoacerbus.cuneiform.App")
-    args("--output-dir", "$buildDir/pages")
+    args("--output-dir", "$buildDir/pages", "--dpi", "166")
     if (project.hasProperty("skipImages")) {
         args("--html")
     }

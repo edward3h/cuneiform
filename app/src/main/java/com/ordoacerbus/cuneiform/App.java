@@ -42,6 +42,9 @@ public class App implements Callable<Integer> {
     @CommandLine.Option(names = {"-i", "--html"})
     boolean htmlOnly;
 
+    @CommandLine.Option(names = {"--dpi"})
+    int dpi = DefaultImageRenderer.DEFAULT_DPI;
+
     private ExecutorService executor;
     private Templates templates = new StaticTemplates();
 
@@ -88,7 +91,7 @@ public class App implements Callable<Integer> {
                 var crop = page.getCropBox();
                 if (crop.getWidth() > crop.getHeight()) {
                     // landscape format indicates a datasheet
-                    return new FactionProcessor(path, new DefaultImageRenderer(), executor, htmlOnly);
+                    return new FactionProcessor(path, new DefaultImageRenderer(dpi), executor, htmlOnly);
                 }
             }
         }

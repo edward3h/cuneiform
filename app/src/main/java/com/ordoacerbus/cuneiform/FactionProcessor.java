@@ -65,9 +65,8 @@ public class FactionProcessor extends PDFTextStripper implements Processor {
             if (!htmlOnly) {
                 processImages(doc);
             }
-            renderer.document(doc);
             writeText(doc, NullWriter.INSTANCE);
-            var factionName = extractFactionName();//factionCounter.max().orElseThrow();
+            var factionName = extractFactionName();
             factionBuilder.name(factionName);
             var dir = outdir.resolve(Util.safeName(factionName));
             factionBuilder.factionDir(dir);
@@ -183,7 +182,7 @@ public class FactionProcessor extends PDFTextStripper implements Processor {
             return;
         }
         var filePath = dir.resolve(p.imagePath());
-        renderer.renderPage(filePath, p.number());
+        renderer.renderPage(doc, filePath, p.number());
     }
 
     @Override

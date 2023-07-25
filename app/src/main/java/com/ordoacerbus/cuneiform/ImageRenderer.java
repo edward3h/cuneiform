@@ -6,7 +6,5 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public interface ImageRenderer {
-    void document(PDDocument doc);
-
-    void renderPage(Path filePath, int pageNumber) throws IOException;
+    void renderPage(PDDocument doc, Path outputPath, int pageNumber) throws IOException;
 }
