@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     implementation("org.apache.pdfbox:pdfbox:2.0.29")
-    implementation("org.apache.pdfbox:pdfbox-tools:2.0.29")
+    implementation("org.apache.pdfbox:pdfbox-tools:3.0.1")
     implementation("org.apache.commons:commons-text:1.10.0")
     implementation("org.apache.commons:commons-lang3:3.12.0")
     implementation("commons-io:commons-io:2.13.0")
