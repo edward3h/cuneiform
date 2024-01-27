@@ -31,8 +31,8 @@ dependencies {
 
     implementation("org.slf4j:slf4j-api:2.0.7")
     runtimeOnly("org.logevents:logevents:0.4.4")
-    jteGenerate("gg.jte:jte-models:3.0.1")
-    implementation("gg.jte:jte-models:3.0.1")
+    jteGenerate("gg.jte:jte-models:3.1.9")
+    implementation("gg.jte:jte-models:3.1.9")
 
     implementation("com.github.SvenWoltmann:color-thief-java:master-SNAPSHOT") // jitpack build from https://github.com/SvenWoltmann/color-thief-java
     implementation("org.jsoup:jsoup:1.16.1")
